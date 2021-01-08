@@ -47,6 +47,9 @@ a {
 a:hover {
   color: #9f9f9f;
 }
+a h2:hover {
+  color: #9f9f9f;
+}
 ul {
   padding: 0;
   margin: 0;

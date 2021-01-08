@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const Rating = (props) => {
-  const { rating, numReview } = props
+  const { rating, numReview } = props;
   return (
     <div className='rating'>
       <span>
@@ -59,9 +59,9 @@ const Rating = (props) => {
           }
         ></i>
       </span>
-      <span>{numReview + ' reviews'}</span>
+      <p>{numReview + ' reviews'}</p>
     </div>
-  )
-}
+  );
+};
 
-export default Rating
+export default Rating;

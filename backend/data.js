@@ -1,7 +1,23 @@
+import bcrypt from 'bcryptjs';
+
 const data = {
+  users: [
+    {
+      name: 'Frannz',
+      email: 'admin@example.com',
+      password: bcrypt.hashSync('1234', 8),
+      isAdmin: true,
+    },
+    {
+      //customer
+      name: 'John',
+      email: 'user@example.com',
+      password: bcrypt.hashSync('1234', 8),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
-      _id: '1',
       name: 'Noob Tshirt',
       category: 'Shirts',
       image: '/images/product1.jpg',
@@ -13,7 +29,6 @@ const data = {
       description: 'High Quality Shirt',
     },
     {
-      _id: '2',
       name: 'Orange Tshirt',
       category: 'Shirts',
       image: '/images/product2.jpg',
@@ -25,7 +40,6 @@ const data = {
       description: 'High Quality Shirt',
     },
     {
-      _id: '3',
       name: 'Camo Tshirt',
       category: 'Shirts',
       image: '/images/product3.jpg',
@@ -37,7 +51,6 @@ const data = {
       description: 'High Quality Shirt',
     },
     {
-      _id: '4',
       name: 'V Long Sleeve Shirt',
       category: 'Shirts',
       image: '/images/product4.jpg',
@@ -49,7 +62,6 @@ const data = {
       description: 'High Quality Shirt',
     },
     {
-      _id: '5',
       name: 'Red Long Sleeve Shirt',
       category: 'Shirts',
       image: '/images/product5.jpg',
@@ -61,7 +73,6 @@ const data = {
       description: 'High Quality Shirt',
     },
     {
-      _id: '6',
       name: 'Nat Geo Tshirt',
       category: 'Shirts',
       image: '/images/product6.jpg',
@@ -73,6 +84,6 @@ const data = {
       description: 'High Quality Shirt',
     },
   ],
-}
+};
 
-export default data
+export default data;

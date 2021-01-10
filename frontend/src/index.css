@@ -9,6 +9,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #151515;
 }
 #root {
   height: 100%;
@@ -32,6 +33,8 @@ main {
   grid-area: main;
   background-color: #151515;
   padding: 1rem;
+  max-width: 1300px;
+  margin: auto;
 }
 footer {
   grid-area: footer;
@@ -62,10 +65,10 @@ input,
 select,
 textarea,
 button {
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 0.5rem;
   border: 0.1rem #a4a4a4 solid;
-  font-size: 1.6rem;
+  font-size: 1.25rem;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -116,13 +119,23 @@ a.brand {
   justify-content: center;
 }
 .row.top {
+  margin-top: 2rem;
   align-items: flex-start;
 }
 .col-1 {
-  flex: 1 1 25rem;
+  flex: 2 1 30rem;
+}
+
+.col-1 ul {
+  margin: 0 1.25rem;
+}
+
+.col-1 h1 {
+  margin-top: 0;
 }
 .col-2 {
-  flex: 2 1 50rem;
+  text-align: center;
+  flex: 2 1 40rem;
 }
 .min-30 {
   min-width: 30rem;
@@ -139,16 +152,15 @@ img.small {
   max-width: 8rem;
   width: 100%;
   height: 100%;
-  border-radius: 0.1 rem;
+  border-radius: 0;
 }
 
 img.medium {
-  max-width: 29rem;
   width: 100%;
 }
 img.large {
-  width: 500px;
-  height: 500px;
+  width: 70%;
+  height: 70%;
 }
 
 .card {
@@ -157,6 +169,20 @@ img.large {
   border-radius: 2rem;
   margin: 1rem;
   transition: transform 0.2s;
+  height: 475px;
+  width: 300px;
+}
+
+.cart {
+  border: 0.1rem #202020 solid;
+  background-color: #202020;
+  border-radius: 2rem;
+  margin: 1rem;
+  transition: transform 0.2s;
+}
+
+.cart-body {
+  padding: 1rem;
 }
 
 li {
@@ -231,4 +257,11 @@ h2 {
 
 .loading {
   color: #fff;
+}
+
+.btn {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: #202020;
+  border-radius: 2rem;
 }

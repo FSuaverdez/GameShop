@@ -1,24 +1,24 @@
-import { Link } from 'react-router-dom';
-import Rating from '../components/Rating';
+import { Link } from 'react-router-dom'
+import Rating from '../components/Rating'
 
-import { useDispatch, useSelector } from 'react-redux';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import { useEffect, useState } from 'react';
-import { detailsProduct } from '../actions/productActions';
+import { useDispatch, useSelector } from 'react-redux'
+import LoadingBox from '../components/LoadingBox'
+import MessageBox from '../components/MessageBox'
+import { useEffect, useState } from 'react'
+import { detailsProduct } from '../actions/productActions'
 
 export default function ProductScreen(props) {
-  const dispatch = useDispatch();
-  const productId = props.match.params.id;
-  const [qty, setQty] = useState(1);
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;
+  const dispatch = useDispatch()
+  const productId = props.match.params.id
+  const [qty, setQty] = useState(1)
+  const productDetails = useSelector((state) => state.productDetails)
+  const { loading, error, product } = productDetails
   useEffect(() => {
-    dispatch(detailsProduct(productId));
-  }, [dispatch, productId]);
+    dispatch(detailsProduct(productId))
+  }, [dispatch, productId])
   const addToCartHandler = () => {
-    props.history.push(`/cart/${productId}?qty=${qty}`);
-  };
+    props.history.push(`/cart/${productId}?qty=${qty}`)
+  }
 
   return (
     <div>
@@ -28,7 +28,9 @@ export default function ProductScreen(props) {
         <MessageBox variant='danger'>{error}</MessageBox>
       ) : (
         <div>
-          <Link to='/'>Back to result</Link>
+          <Link className='btn' to='/'>
+            Back to result
+          </Link>
           <div className='row top'>
             <div className='col-2'>
               <img
@@ -50,7 +52,7 @@ export default function ProductScreen(props) {
                     numReview={product.numReview}
                   ></Rating>
                 </li>
-                <li className='price'>Price: PHP {product.price}</li>
+                <li className='price'>Price: ${product.price}</li>
                 <li>
                   Description:<p>{product.description}</p>{' '}
                 </li>
@@ -58,7 +60,7 @@ export default function ProductScreen(props) {
             </div>
 
             <div className='col-1'>
-              <div className='card card-body'>
+              <div className='cart cart-body'>
                 <ul>
                   <li>
                     <div className='row'>
@@ -117,5 +119,5 @@ export default function ProductScreen(props) {
         </div>
       )}
     </div>
-  );
+  )
 }

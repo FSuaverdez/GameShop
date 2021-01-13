@@ -33,8 +33,6 @@ main {
   grid-area: main;
   background-color: #151515;
   padding: 1rem;
-  max-width: 1300px;
-  margin: auto;
 }
 footer {
   grid-area: footer;
@@ -243,6 +241,10 @@ h2 {
   background-color: #000;
 }
 
+.alert-success {
+  color: #fff;
+}
+
 h1 {
   color: #fff;
 }
@@ -311,4 +313,26 @@ h2 {
 .checkout-steps > div.active {
   border-top-color: #f08000;
   color: #f08000;
+}
+
+button.small {
+  font-size: 1.2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+.table tbody tr:nth-of-type(odd) {
+  background-color: #202020;
+}
+.table td,
+.table th {
+  text-align: left;
+  border: 0.1rem solid #202020;
+  padding: 0.5rem;
+}
+.table button {
+  margin: 0 0.2rem;
 }

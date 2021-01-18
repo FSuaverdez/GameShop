@@ -42,40 +42,39 @@ export default function CartScreen(props) {
             {cartItems.map((item) => (
               <li key={item.product}>
                 <div className='row'>
-                  <div>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className='small'
-                    ></img>
-                  </div>
-                  <div className='min-30'>
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
-                  </div>
-                  <div>
-                    <select
-                      value={item.qty}
-                      onChange={(e) =>
-                        dispatch(
-                          addToCart(item.product, Number(e.target.value))
-                        )
-                      }
-                    >
-                      {[...Array(item.countInStock).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>${item.price}</div>
-                  <div>
-                    <button
-                      type='button'
-                      onClick={() => removeFromCartHandler(item.product)}
-                    >
-                      Delete
-                    </button>
+                  <div className='cart-row'>
+                    <div className='cart-titles'>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className='small'
+                      ></img>
+                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    </div>
+
+                    <div className='cart-buttons'>
+                      <span>${item.price} </span>
+                      <select
+                        value={item.qty}
+                        onChange={(e) =>
+                          dispatch(
+                            addToCart(item.product, Number(e.target.value))
+                          )
+                        }
+                      >
+                        {[...Array(item.countInStock).keys()].map((x) => (
+                          <option key={x + 1} value={x + 1}>
+                            {x + 1}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        type='button'
+                        onClick={() => removeFromCartHandler(item.product)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               </li>

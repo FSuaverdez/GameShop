@@ -63,13 +63,15 @@ input,
 select,
 textarea,
 button {
-  padding: 0.5rem;
+  padding: 1rem;
   border-radius: 0.5rem;
   border: 0.1rem #a4a4a4 solid;
   font-size: 1.25rem;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-weight: bold;
+  background-color: #ffff;
 }
 button {
   background-color: #f8f8f8;
@@ -147,9 +149,8 @@ img {
   border-bottom-right-radius: 0;
 }
 img.small {
-  max-width: 8rem;
-  width: 100%;
-  height: 100%;
+  height: 100px;
+  width: 100px;
   border-radius: 0;
 }
 
@@ -159,6 +160,8 @@ img.medium {
 img.large {
   width: 70%;
   height: 70%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .card {
@@ -294,7 +297,7 @@ h2 {
   min-width: 12rem;
   padding: 1rem;
   z-index: 1;
-  background-color: #203040;
+  background-color: #404040;
   margin: 0;
   margin-top: 0.4rem;
   border-radius: 0.5rem;
@@ -335,4 +338,29 @@ button.small {
 }
 .table button {
   margin: 0 0.2rem;
+}
+
+.cart-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  margin-left: 1rem;
+  margin: auto;
+  width: 100%;
+}
+
+select {
+  margin-right: 1rem;
+}
+
+.cart-titles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cart-buttons {
+  min-width: 190px;
 }

@@ -2,6 +2,8 @@ html {
   font-size: 62.5%; /*16px x 62.5= 10 px=1 rem*/
   box-sizing: border-box;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Coda&display=swap');
 body {
   margin: 0;
   height: 100vh;
@@ -10,6 +12,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #151515;
+  font-family: 'Coda', cursive;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.brand {
+  font-family: 'Coda', cursive;
 }
 #root {
   height: 100%;
@@ -25,7 +38,9 @@ body {
   grid-template-rows: 5rem 1fr 5rem;
   height: 100%;
 }
+
 header {
+  padding: 0 2rem;
   grid-area: header;
   background-color: #151515;
 }
@@ -208,7 +223,7 @@ li {
 h2 {
   margin: 0;
   padding: 10px 0;
-  font-size: 2.2rem;
+  font-size: 2rem;
 }
 .rating span {
   color: #f0c040;
@@ -262,6 +277,12 @@ h2 {
 
 .loading {
   color: #fff;
+  display: flex;
+  height: 500px;
+  font-size: 5rem;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn {

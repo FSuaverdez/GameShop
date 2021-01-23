@@ -1,41 +1,43 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import data from '../data.js';
-import Product from '../models/productModel.js';
-import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
+import express from 'express'
+import expressAsyncHandler from 'express-async-handler'
+import data from '../data.js'
+import Order from '../models/orderModel.js'
+import Product from '../models/productModel.js'
+import User from '../models/userModel.js'
+import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js'
 
-const productRouter = express.Router();
+const productRouter = express.Router()
 
 productRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
-    const seller = req.query.seller || '';
-    const sellerFilter = seller ? { seller } : {};
-    const products = await Product.find({ ...sellerFilter });
-    res.send(products);
+    const seller = req.query.seller || ''
+    const sellerFilter = seller ? { seller } : {}
+    const products = await Product.find({ ...sellerFilter })
+    res.send(products)
   })
-);
+)
 
 productRouter.get(
   '/seed',
   expressAsyncHandler(async (req, res) => {
     // await Product.remove({});
-    const createdProducts = await Product.insertMany(data.products);
-    res.send({ createdProducts });
+    const createdProducts = await Product.insertMany(data.products)
+    res.send({ createdProducts })
   })
-);
+)
 
 productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id)
     if (product) {
-      res.send(product);
+      res.send(product)
     } else {
-      res.status(404).send({ message: 'Product Not Found' });
+      res.status(404).send({ message: 'Product Not Found' })
     }
   })
-);
+)
 
 productRouter.post(
   '/',
@@ -53,47 +55,62 @@ productRouter.post(
       rating: 0,
       numReview: 0,
       description: 'sample description',
-    });
-    const createdProduct = await product.save();
-    res.send({ message: 'Product Created', product: createdProduct });
+    })
+    const createdProduct = await product.save()
+    res.send({ message: 'Product Created', product: createdProduct })
   })
-);
+)
 productRouter.put(
   '/:id',
   isAuth,
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    const productId = req.params.id;
-    const product = await Product.findById(productId);
+    const productId = req.params.id
+    const product = await Product.findById(productId)
     if (product) {
-      product.name = req.body.name;
-      product.price = req.body.price;
-      product.image = req.body.image;
-      product.category = req.body.category;
-      product.brand = req.body.brand;
-      product.countInStock = req.body.countInStock;
-      product.description = req.body.description;
-      const updatedProduct = await product.save();
-      res.send({ message: 'Product Updated', product: updatedProduct });
+      product.name = req.body.name
+      product.price = req.body.price
+      product.image = req.body.image
+      product.category = req.body.category
+      product.brand = req.body.brand
+      product.countInStock = req.body.countInStock
+      product.description = req.body.description
+      const updatedProduct = await product.save()
+      res.send({ message: 'Product Updated', product: updatedProduct })
     } else {
-      res.status(404).send({ message: 'Product Not Found' });
+      res.status(404).send({ message: 'Product Not Found' })
     }
   })
-);
+)
 
 productRouter.delete(
   '/:id',
   isAuth,
-  isAdmin,
+  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id)
     if (product) {
-      const deleteProduct = await product.remove();
-      res.send({ message: 'Product Deleted', product: deleteProduct });
+      const deleteProduct = await product.remove()
+      res.send({ message: 'Product Deleted', product: deleteProduct })
     } else {
-      res.status(404).send({ message: 'Product Not Found' });
+      res.status(404).send({ message: 'Product Not Found' })
     }
   })
-);
+)
 
-export default productRouter;
+productRouter.get(
+  '/listall',
+  expressAsyncHandler(async (req, res) => {
+    const products = await Product.find()
+    const orders = await Order.find()
+    const users = await User.find()
+
+    if (products && orders && users) {
+      res.send({ products, orders, users })
+    } else {
+      res.status(404).send({ message: 'List Not Found' })
+    }
+  })
+)
+
+export default productRouter

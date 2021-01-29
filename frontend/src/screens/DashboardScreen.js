@@ -53,8 +53,10 @@ function DashboardScreen() {
 
               <div className=''>
                 <p className='white-text'>
-                  Total Payments : ${' '}
-                  <span className='bold'>{report.ordersReport.totalPaid}</span>
+                  Total Payments :{' '}
+                  <span className='bold'>
+                    $ {report.ordersReport.totalPaid}
+                  </span>
                 </p>
               </div>
               <div className=''>
@@ -129,7 +131,7 @@ function DashboardScreen() {
             <div className='row center'>
               <div className='report-item'>
                 <h3 className='white-text'>
-                  Payments
+                  Sales
                   <p className='bolder'>$ {report.dateReport.newPayment}</p>
                 </h3>
               </div>

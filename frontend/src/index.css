@@ -385,3 +385,19 @@ select {
 .cart-buttons {
   min-width: 190px;
 }
+
+.date-picker {
+  background-color: #151515;
+  color: #fff;
+  width: 65px;
+}
+
+.white-text {
+  color: #fff;
+  padding: 0.25rem;
+}
+
+.t-center {
+  text-align: center;
+  margin: 0;
+}

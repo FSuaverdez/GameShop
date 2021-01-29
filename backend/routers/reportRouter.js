@@ -9,6 +9,7 @@ const reportRouter = express.Router()
 reportRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
+    const { startDate, endDate } = req.query
     const products = await Product.find()
     const orders = await Order.find()
     const users = await User.find()
@@ -35,8 +36,20 @@ const generateReport = (products, orders, users) => {
     0
   )
 
+  const totalItemsSold = Object.values(orders).reduce((t, { orderItems }) => {
+    return t + Object.values(orderItems).reduce((t1, { qty }) => t1 + qty, 0)
+  }, 0)
+
   const pendingPayment = Object.values(orders).reduce((t, { isPaid }) => {
     if (!isPaid) {
+      return t + 1
+    }
+
+    return t + 0
+  }, 0)
+
+  const paidOrders = Object.values(orders).reduce((t, { isPaid }) => {
+    if (isPaid) {
       return t + 1
     }
 
@@ -61,6 +74,8 @@ const generateReport = (products, orders, users) => {
   const ordersReport = {
     orderNo: orders.length,
     totalPaid: totalPaid.toFixed(2),
+    totalItemsSold,
+    paidOrders,
     pendingPayment,
     delivered,
     toDeliver,

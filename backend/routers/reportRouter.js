@@ -20,7 +20,7 @@ reportRouter.get(
     if (products && orders && users) {
       res.send({ report })
     } else {
-      res.status(404).send({ message: 'List Not Found' })
+      res.status(404).send({ message: 'Report Not Found' })
     }
   })
 )

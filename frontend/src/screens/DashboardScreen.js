@@ -1,92 +1,59 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import axios from 'axios'
+import React, { useEffect } from 'react'
 import LoadingBox from '../components/LoadingBox'
+import { useDispatch, useSelector } from 'react-redux'
+import { listReport } from '../actions/reportActions'
+import MessageBox from '../components/MessageBox'
 function DashboardScreen() {
-  const [products, setProducts] = useState([])
-  const [orders, setOrders] = useState([])
-  const [users, setUsers] = useState([])
-  const [totalPaid, setPaid] = useState(null)
-  const [totalSold, setSold] = useState(null)
-  const [toDeliver, setToDeliver] = useState(null)
-  const [delivered, setDelivered] = useState(null)
-  const [pending, setPending] = useState(null)
-  const [paid, setPayed] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const fetchData = useCallback(async () => {
-    const { data } = await axios.get('/list-all')
-
-    setProducts(data.products)
-    setOrders(data.orders)
-    setUsers(data.users)
-
-    let total = 0
-    let sold = 0
-    let toDeliv = 0
-    let deliv = 0
-    let pend = 0
-    let payed = 0
-    orders.forEach((order) => {
-      order.orderItems.forEach((item) => {
-        total += item.qty + item.price
-        sold += item.qty
-      })
-      toDeliv += !order.isDelivered
-      deliv += order.isDelivered
-      pend += !order.isPaid
-      payed += order.isPaid
-    })
-
-    setPaid(total)
-    setSold(sold)
-    setToDeliver(toDeliv)
-    setDelivered(deliv)
-    setPayed(payed)
-    setPending(pend)
-    setLoading(false)
-  }, [orders])
-
+  const dispatch = useDispatch()
+  const reportList = useSelector((state) => state.reportList)
+  const { loading, error, report } = reportList
+  console.log(report)
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
+    dispatch(listReport({}))
+  }, [dispatch])
   return (
     <div>
       {loading ? (
         <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox variant='danger'>{error}</MessageBox>
       ) : (
         <div>
           <div className='row center'>
             <div className='cart cart-body'>
-              <h2>Total Products: {products.length} </h2>
+              <h2>Total Products: {report.productsReport.productNo}</h2>
             </div>
             <div className='cart cart-body'>
-              <h2>Total Orders: {orders.length}</h2>
+              <h2>Total Orders:{report.ordersReport.orderNo}</h2>
             </div>
             <div className='cart cart-body'>
-              <h2>Total Users:{users.length} </h2>
-            </div>
-          </div>
-          <div className='row center'>
-            <div className='cart cart-body'>
-              <h2>Total Payments : $ {totalPaid.toFixed(2)} </h2>
-            </div>
-            <div className='cart cart-body'>
-              <h2>Total Item Sold: {totalSold}</h2>
+              <h2>Total Users: {report.usersReport.userNo}</h2>
             </div>
           </div>
           <div className='row center'>
             <div className='cart cart-body'>
-              <h2>Products to Deliver:{toDeliver} </h2>
+              <h2>Total Payments : $ {report.ordersReport.totalPaid}</h2>
             </div>
             <div className='cart cart-body'>
-              <h2>Products Delivered: {delivered}</h2>
+              <h2>Total Item Sold: </h2>
             </div>
           </div>
           <div className='row center'>
             <div className='cart cart-body'>
-              <h2>Pending Order Payment:{pending} </h2>
+              <h2>Products to Deliver:{report.ordersReport.toDeliver} </h2>
             </div>
             <div className='cart cart-body'>
-              <h2>Paid Orders: {paid}</h2>
+              <h2>Products Delivered: {report.ordersReport.delivered} </h2>
+            </div>
+          </div>
+          <div className='row center'>
+            <div className='cart cart-body'>
+              <h2>
+                Pending Order Payment: {report.ordersReport.pendingPayment}
+              </h2>
+            </div>
+            <div className='cart cart-body'>
+              <h2>Paid Orders: </h2>
             </div>
           </div>
         </div>

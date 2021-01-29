@@ -9,6 +9,7 @@ import uploadRouter from './routers/uploadRouter.js'
 import Product from './models/productModel.js'
 import Order from './models/orderModel.js'
 import User from './models/userModel.js'
+import reportRouter from './routers/reportRouter.js'
 
 dotenv.config()
 const app = express()
@@ -24,6 +25,7 @@ app.use('/api/uploads', uploadRouter)
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
 app.use('/api/orders', orderRouter)
+app.use('/api/reports', reportRouter)
 
 app.get('/api/config/paypal', (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || 'sb')

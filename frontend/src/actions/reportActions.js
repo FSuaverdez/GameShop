@@ -7,7 +7,6 @@ import {
 import Axios from 'axios'
 
 export const listReport = (startDate, endDate) => async (dispatch) => {
-  console.log(startDate, endDate)
   dispatch({
     type: REPORT_LIST_REQUEST,
   })

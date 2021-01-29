@@ -395,9 +395,34 @@ select {
 .white-text {
   color: #fff;
   padding: 0.25rem;
+  margin: 0;
 }
 
 .t-center {
   text-align: center;
   margin: 0;
+}
+
+.border {
+  border: 2px #3f3f3f solid;
+}
+
+.bold {
+  font-weight: bold;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.bolder {
+  margin: 0;
+  padding: 0;
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+.report-item {
+  border: 2px #fff solid;
+  border-radius: 1rem;
+  padding: 0.25rem;
+  margin: 1rem;
 }

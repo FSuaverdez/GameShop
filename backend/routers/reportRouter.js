@@ -9,12 +9,13 @@ const reportRouter = express.Router()
 reportRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
-    const { startDate, endDate } = req.query
+    const startDate = new Date(req.query.startDate)
+    const endDate = new Date(req.query.endDate)
     const products = await Product.find()
     const orders = await Order.find()
     const users = await User.find()
 
-    const report = generateReport(products, orders, users)
+    const report = generateReport(products, orders, users, startDate, endDate)
 
     if (products && orders && users) {
       res.send({ report })
@@ -24,7 +25,18 @@ reportRouter.get(
   })
 )
 
-const generateReport = (products, orders, users) => {
+const generateReport = (products, orders, users, date1, date2) => {
+  const startDate = new Date(
+    date1.getFullYear(),
+    date1.getMonth(),
+    date1.getDate()
+  )
+  const endDate = new Date(
+    date2.getFullYear(),
+    date2.getMonth(),
+    date2.getDate()
+  )
+
   const totalPaid = Object.values(orders).reduce(
     (t, { totalPrice, isPaid }) => {
       if (isPaid) {
@@ -66,6 +78,54 @@ const generateReport = (products, orders, users) => {
     0
   )
 
+  const newProducts = products.filter((product) => {
+    const date = new Date(product.createdAt)
+    const creationDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    )
+    return creationDate >= startDate && creationDate <= endDate
+  })
+
+  const newOrders = orders.filter((order) => {
+    const date = new Date(order.createdAt)
+    const creationDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    )
+    return creationDate >= startDate && creationDate <= endDate
+  })
+
+  const newUsers = users.filter((user) => {
+    const date = new Date(user.createdAt)
+    const creationDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    )
+    return creationDate >= startDate && creationDate <= endDate
+  })
+
+  const newPayment = Object.values(newOrders).reduce(
+    (t, { totalPrice, isPaid }) => {
+      if (isPaid) {
+        return t + totalPrice
+      }
+
+      return t + 0
+    },
+    0
+  )
+
+  const dateReport = {
+    newProducts,
+    newOrders,
+    newUsers,
+    newPayment,
+  }
+
   const productsReport = {
     productNo: products.length,
     products,
@@ -91,6 +151,7 @@ const generateReport = (products, orders, users) => {
     productsReport,
     ordersReport,
     usersReport,
+    dateReport,
   }
 }
 

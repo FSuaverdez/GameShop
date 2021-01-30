@@ -21,6 +21,9 @@ import OrderListScreen from './screens/OrderListScreen'
 import UserListScreen from './screens/UserListScreen'
 import UserEditScreen from './screens/UserEditScreen'
 import SellerRoute from './components/SellerRoute'
+// import SellerScreen from './screens/SellerScreen'
+import SearchBox from './components/SearchBox'
+import SearchScreen from './screens/SearchScreen'
 import DashboardScreen from './screens/DashboardScreen'
 
 function App() {
@@ -38,8 +41,15 @@ function App() {
         <header className='row'>
           <div>
             <Link className='brand' to='/'>
-              GameShop
+              Marketplace
             </Link>
+          </div>
+          <div>
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history}></SearchBox>
+              )}
+            ></Route>
           </div>
           <div>
             <Link to='/cart'>
@@ -109,14 +119,15 @@ function App() {
           </div>
         </header>
         <main>
+          {/* <Route path='/seller/:id' component={SellerScreen}></Route> */}
           <Route path='/cart/:id?' component={CartScreen}></Route>
-
           <Route path='/product/:id' component={ProductScreen} exact></Route>
           <Route
             path='/product/:id/edit'
             component={ProductEditScreen}
             exact
           ></Route>
+          <Route path='/dashboard' component={DashboardScreen}></Route>
           <Route path='/signin' component={SigninScreen}></Route>
           <Route path='/register' component={RegisterScreen}></Route>
           <Route path='/shipping' component={ShippingAddressScreen}></Route>
@@ -124,11 +135,11 @@ function App() {
           <Route path='/placeorder' component={PlaceOrderScreen}></Route>
           <Route path='/order/:id' component={OrderScreen}></Route>
           <Route path='/orderhistory' component={OrderHistoryScreen}></Route>
-          <PrivateRoute
-            path='/dashboard'
-            component={DashboardScreen}
+          <Route
+            path='/search/name/:name?'
+            component={SearchScreen}
             exact
-          ></PrivateRoute>
+          ></Route>
           <PrivateRoute
             path='/profile'
             component={ProfileScreen}
@@ -156,7 +167,6 @@ function App() {
             path='/orderlist/seller'
             component={OrderListScreen}
           ></SellerRoute>
-
           <Route path='/' component={HomeScreen} exact></Route>
         </main>
         <footer className='row center'>All right reserved</footer>

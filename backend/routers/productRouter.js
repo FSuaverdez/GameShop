@@ -1,9 +1,7 @@
 import express from 'express'
 import expressAsyncHandler from 'express-async-handler'
 import data from '../data.js'
-import Order from '../models/orderModel.js'
 import Product from '../models/productModel.js'
-import User from '../models/userModel.js'
 import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js'
 
 const productRouter = express.Router()
@@ -11,13 +9,22 @@ const productRouter = express.Router()
 productRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
+    const name = req.query.name || ''
     const seller = req.query.seller || ''
+    const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {}
     const sellerFilter = seller ? { seller } : {}
-    const products = await Product.find({ ...sellerFilter })
+    //remove
+    //added code
+    const products = await Product.find({
+      ...sellerFilter,
+      ...nameFilter,
+    }).populate('seller', 'seller.name seller.logo')
+
+    //added code ends here
     res.send(products)
   })
 )
-
+//end remove here
 productRouter.get(
   '/seed',
   expressAsyncHandler(async (req, res) => {
@@ -30,7 +37,10 @@ productRouter.get(
 productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id)
+    const product = await Product.findById(req.params.id).populate(
+      'seller',
+      'seller.name seller.logo seller.rating seller.numReviews'
+    )
     if (product) {
       res.send(product)
     } else {
@@ -53,7 +63,7 @@ productRouter.post(
       brand: 'sample brand',
       countInStock: 0,
       rating: 0,
-      numReview: 0,
+      numReviews: 0,
       description: 'sample description',
     })
     const createdProduct = await product.save()
@@ -86,7 +96,7 @@ productRouter.put(
 productRouter.delete(
   '/:id',
   isAuth,
-  isSellerOrAdmin,
+  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
     if (product) {
@@ -94,21 +104,6 @@ productRouter.delete(
       res.send({ message: 'Product Deleted', product: deleteProduct })
     } else {
       res.status(404).send({ message: 'Product Not Found' })
-    }
-  })
-)
-
-productRouter.get(
-  '/listall',
-  expressAsyncHandler(async (req, res) => {
-    const products = await Product.find()
-    const orders = await Order.find()
-    const users = await User.find()
-
-    if (products && orders && users) {
-      res.send({ products, orders, users })
-    } else {
-      res.status(404).send({ message: 'List Not Found' })
     }
   })
 )

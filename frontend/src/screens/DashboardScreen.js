@@ -1,18 +1,74 @@
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
-
+import CanvasJSReact from '../assets/canvasjs.react'
 import 'react-datepicker/dist/react-datepicker.css'
 import LoadingBox from '../components/LoadingBox'
 import { useDispatch, useSelector } from 'react-redux'
 import { listReport } from '../actions/reportActions'
 import MessageBox from '../components/MessageBox'
 function DashboardScreen() {
+  const CanvasJSChart = CanvasJSReact.CanvasJSChart
   const dispatch = useDispatch()
   const reportList = useSelector((state) => state.reportList)
   const { loading, error, report } = reportList
   const [startDate, setStartDate] = useState(
     new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
   )
+
+  const options = !report
+    ? null
+    : {
+        theme: 'dark1',
+        animationEnabled: true,
+        title: {
+          text: 'Sales 7 Days',
+        },
+        axisX: {
+          valueFormatString: 'MMM-DD',
+        },
+        axisY: {
+          title: 'Sales (in USD)',
+          prefix: '$',
+        },
+        data: [
+          {
+            yValueFormatString: '$#,###',
+            xValueFormatString: 'MMMM DD, YYYY',
+            type: 'spline',
+            dataPoints: [
+              {
+                x: new Date(report.dateReport.salesReport.day1Sales.date),
+                y: parseInt(report.dateReport.salesReport.day1Sales.day1Sales),
+              },
+              {
+                x: new Date(report.dateReport.salesReport.day2Sales.date),
+                y: parseInt(report.dateReport.salesReport.day2Sales.day2Sales),
+              },
+              {
+                x: new Date(report.dateReport.salesReport.day3Sales.date),
+                y: parseInt(report.dateReport.salesReport.day3Sales.day3Sales),
+              },
+              {
+                x: new Date(report.dateReport.salesReport.day4Sales.date),
+                y: parseInt(report.dateReport.salesReport.day4Sales.day4Sales),
+              },
+              {
+                x: new Date(report.dateReport.salesReport.day5Sales.date),
+                y: parseInt(report.dateReport.salesReport.day5Sales.day5Sales),
+              },
+              {
+                x: new Date(report.dateReport.salesReport.day6Sales.date),
+                y: parseInt(report.dateReport.salesReport.day6Sales.day6Sales),
+              },
+              {
+                x: new Date(report.dateReport.salesReport.day7Sales.date),
+                y: parseInt(report.dateReport.salesReport.day7Sales.day7Sales),
+              },
+            ],
+          },
+        ],
+      }
+
   const [endDate, setEndDate] = useState(new Date())
   console.log(report)
   useEffect(() => {
@@ -156,6 +212,10 @@ function DashboardScreen() {
                 </h3>
               </div>
             </div>
+            <CanvasJSChart
+              options={options}
+              /* onRef={ref => this.chart = ref} */
+            />
           </div>
         </div>
       )}

@@ -15,7 +15,7 @@ function DashboardScreen() {
     new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
   )
 
-  const options = !report
+  const options = loading
     ? null
     : {
         theme: 'dark1',
